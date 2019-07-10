@@ -1,11 +1,6 @@
 #!/bin/bash
 
-echo "Updating device..."
-sudo apt-get update -y
-sudo apt-get upgrade -y
-echo "Finished updating device."
-echo "=========================="
-echo ""
+# This script assumes the device has already been updated.
 
 echo "Installing developer tools..."
 sudo apt-get install -y build-essential cmake unzip pkg-config
@@ -34,22 +29,26 @@ echo ""
 
 echo "Downloading OpenCV..."
 cd ~
-#wget -O opencv.zip https://github.com/opencv/opencv/archive/4.0.0.zip
-#wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.0.0.zip
+wget -O opencv.zip https://github.com/opencv/opencv/archive/4.0.0.zip
+wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.0.0.zip
 echo "Finished downloading. Unzipping..."
-#unzip opencv.zip
-#unzip opencv_contrib.zip
-#mv opencv-4.0.0 opencv
-#mv opencv_contrib-4.0.0 opencv_contrib
+unzip opencv.zip
+unzip opencv_contrib.zip
+mv opencv-4.0.0 opencv
+mv opencv_contrib-4.0.0 opencv_contrib
 echo "Finished unzipping OpenCv."
 echo "=========================="
 echo ""
 
 # Add these lines if you need to install pip
-#echo "Installing pip..."
-#wget https://bootstrap.pypa.io/get-pip.py
-#sudo python3 get-pip.py
-#echo "Finished installing pip."
+echo "Installing pip..."
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python3 get-pip.py
+echo "Finished installing pip."
+
+echo "Installing virtualenv..."
+sudo pip install virtualenv virtualenvwrapper
+echo "Done installing virtualenv."
 
 echo "Adding virtual environment lines to .bashrc."
 echo "# virtualenv and virtualenvwrapper" >> ~/.bashrc
@@ -59,22 +58,21 @@ echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc
 source `which virtualenvwrapper.sh`
 
 echo "Creating virtual environment \"py3cv4\" for installation"
-sudo pip install virtualenv virtualenvwrapper
 mkvirtualenv py3cv4 -p python3
-workon py3cv4cd 
+source /home/development/.virtualenvs/py3cv4/bin/activate
 
 echo "Installing numpy..."
 sudo pip install numpy
 echo "Finished installing numpy."
 echo ""
 
-#sudo apt install gstreamer1.0
-#sudo apt install gstreamer1.0-tools
-#sudo apt install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+echo "Installing gstreamer..."
+sudo apt install gstreamer1.0
+sudo apt install gstreamer1.0-tools
+sudo apt install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+echo "Done installing gstreamer."
 
-echo "Preparing to build OpenCv (entering py3cv4)..."
-source /home/development/.virtualenvs/py3cv4/bin/activate
-echo "Virtual environment py3cv4 entered."
+echo "Preparing to build OpenCv..."
 echo "=================================="
 echo ""
 
