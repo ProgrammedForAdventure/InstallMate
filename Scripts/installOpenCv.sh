@@ -67,16 +67,18 @@ echo "Finished installing numpy."
 echo ""
 
 echo "Installing gstreamer..."
-sudo apt install gstreamer1.0
-sudo apt install gstreamer1.0-tools
-sudo apt install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+sudo apt install -y gstreamer1.0
+sudo apt install -y gstreamer1.0-tools
+sudo apt install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 echo "Done installing gstreamer."
 
 echo "Preparing to build OpenCv..."
 echo "=================================="
 echo ""
 
-cd ~/opencv/build
+cd ~/opencv
+mkdir build
+cd build
 
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
 	-D CMAKE_INSTALL_PREFIX=/usr/local \

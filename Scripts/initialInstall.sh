@@ -10,3 +10,4 @@ sudo apt autoremove -y
 # their data to a file and the terminal.
 sudo ./installVnc.sh 2>&1 | tee vncInstallResults.txt
 sudo ./installOpenCv.sh 2>&1 | tee opencvInstallResults.txt
+sudo ./installSixFab4gLte.sh 2>&1 | tee sixFab4gLteInstallResults.txt
