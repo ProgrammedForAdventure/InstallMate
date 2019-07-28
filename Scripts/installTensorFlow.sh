@@ -1,31 +1,55 @@
+#!/bin/bash
+
 cd ~
 
-sudo apt update -y
+sudo apt-get update -y
+sudo apt-get upgrade -y
+sudo apt-get autoremove -y
 
-#Install dependencies that are/may be missing from Ubuntu Mate
-sudo apt install -y python3-dev python3-pip
-sudo apt install -y libatlas-base-dev
-sudo pip3 install -U virtualenv
+#Install dependencies that are/may be missing
+sudo apt-get install -y python3-dev python3-pip
+sudo apt-get install -y libatlas-base-dev
+sudo pip3 install --upgrade pip
+sudo pip3 install -U virtualenv virtualenvwrapper
 sudo apt-get install -y python-h5py
 
-sudo virtualenv --system-site-packages -p python3 ~/.virtualenvs/py3tf
-source ~/.virtualenvs/py3tf/bin/activate
-pip install --upgrade pip
-pip install scipy
-pip install ffmpeg
+# Source virtualenvwrapper
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.7
+source `which virtualenvwrapper.sh`
+rmvirtualenv py3tf
+mkvirtualenv --python /usr/bin/python3.7 py3tf
+workon py3tf
+echo "Done creating virtualenv \"py3tf\""
 
-#sudo apt-get install -y curl && sudo curl -sSL https://get.docker.com/ | sh
+sudo pip3 install scipy
+sudo pip3 install ffmpeg
+
 sudo apt-get install -y ffmpeg
-sudo apt-get update -y && sudo apt-get upgrade -y
 
 cd ~/.virtualenvs/py3tf/
-#git clone https://github.com/tensorflow/tensorflow.git
-cd tensorflow
-#git checkout r1.14
 
-# I went and edited the /install/install_deb...sh file and removed the ffmpeg line from it because it was causing issues
-sudo CI_DOCKER_EXTRA_PARAMS="-e  CI_BUILD_PYTHON=python3 -e CROSSTOOL_PYTHON_INCLUDE_PATH=/usr/include/python3.6" \
-    tensorflow/tools/ci_build/ci_build.sh PI-PYTHON3 \
-    tensorflow/tools/ci_build/pi/build_raspberry_pi.sh
+echo "Installing tensorflow (sometimes fails the first time, \"hash\" error):"
+sudo pip3 install tensorflow
 
-sudo pip install tensorflow-r1.14-cp34-none-linux_armv71.whl
+MAX_TRIES=4
+COUNT=0
+while [ $COUNT -lt $MAX_TRIES ]; do
+   sudo pip3 install tensorflow --ignore-installed
+   if [ $? -eq 0 ];then
+	exit 0
+   fi
+   let COUNT=COUNT+1
+done
+if [ $COUNT -eq $MAX_TRIES ];then
+   echo "Too many non-successful tries - failed to install tensorflow."
+   exit
+fi
+
+echo "Finished installing tensorflow!"
+echo ""
+
+echo "Downloading example code..."
+git config --global user.name "Isaac Elmore"
+git config --global user.email "isaac.elmore@gmail.com"
+cd ~
+git clone  https://github.com/tensorflow/tensorflow.git
