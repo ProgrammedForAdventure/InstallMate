@@ -1,0 +1,21 @@
+Setting up Rasperry Pi 4
+Downloaded Raspbian Buster (4.19) with desktop (not with recommended software)
+Flashing with USB is so much faster than through the SD card slot! 
+Ran through all the standard setup stuff, updated, rebooted. Running the InstallMate/Scripts/TensorFlowInstall.sh script.
+I'm trying a different installation tutorial for tensorflow. I also had to install JavaC to use this tutorial, which uses Bazel (after being built) to install TF. https://www.youtube.com/watch?v=WqCnW_2XDw8
+Now following tutorial exactly, because the version (latest) of things was not working. Now I need to set JAVA_HOME.
+
+Forget all that! Instead did the much simpler: https://www.raspberrypi.org/magpi/tensorflow-ai-raspberry-pi/
+sudo apt install libatlas-base-dev
+pip3 install tensorflow
+
+That did successfully do the python import and hello world. Not sure if it has enough to meet my needs, and examples etc.
+Now I'm trying to build. Some things are failing, and it says that g++ and gcc were not found.
+I uncommented out the buster source from the /etc/apt/sources.list file, and that enabled me to access gcc-4.8.
+sudo apt-get install gcc-4.8
+
+Then I added these two lines to sources.list:
+deb http://mirrordirector.raspbian.org/raspbian/ wheezy main contrib non-free rpi
+deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi
+And ran:
+sudo apt-get install g++-4.8
