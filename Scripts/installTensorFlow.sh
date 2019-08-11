@@ -21,7 +21,7 @@ mkvirtualenv --python /usr/bin/python3.7 py3tf
 workon py3tf
 echo "Done creating virtualenv \"py3tf\""
 
-sudo pip3 install scipy
+sudo pip3 install scipy --ignore-installed
 sudo pip3 install ffmpeg
 
 sudo apt-get install -y ffmpeg
@@ -29,18 +29,19 @@ sudo apt-get install -y ffmpeg
 cd ~/.virtualenvs/py3tf/
 
 echo "Installing tensorflow (sometimes fails the first time, \"hash\" error):"
-sudo pip3 install tensorflow
 
 MAX_TRIES=4
 COUNT=0
+FINISHED=0
 while [ $COUNT -lt $MAX_TRIES ]; do
    sudo pip3 install tensorflow --ignore-installed
    if [ $? -eq 0 ];then
-	exit 0
+	COUNT=MAX_TRIES
+	FINISHED=1
    fi
    let COUNT=COUNT+1
 done
-if [ $COUNT -eq $MAX_TRIES ];then
+if [ $FINISHED -eq 0 ];then
    echo "Too many non-successful tries - failed to install tensorflow."
    exit
 fi
@@ -51,5 +52,9 @@ echo ""
 echo "Downloading example code..."
 git config --global user.name "Isaac Elmore"
 git config --global user.email "isaac.elmore@gmail.com"
-cd ~
-git clone  https://github.com/tensorflow/tensorflow.git
+cd ~/Desktop
+git clone  https://github.com/tensorflow/models.git
+
+if [ $? -eq 0 ];then
+	echo "Successfully downloaded example code. Installation complete!"
+fi
