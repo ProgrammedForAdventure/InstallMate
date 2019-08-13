@@ -21,10 +21,31 @@ mkvirtualenv --python /usr/bin/python3.7 py3tf
 workon py3tf
 echo "Done creating virtualenv \"py3tf\""
 
-sudo pip3 install scipy --ignore-installed
 sudo pip3 install ffmpeg
+sudo pip3 install pillow lxml jupyter matplotlib cython
 
+sudo apt-get install -y python-tk
 sudo apt-get install -y ffmpeg
+
+# Install OpenCV dependencies
+sudo apt-get install -y libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev
+sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+sudo apt-get install -y libxvidcore-dev libx264-dev
+sudo apt-get install -y qt4-dev-tools
+
+# Install OpenCV
+sudo apt install -y python3-opencv
+
+# Install protobuf
+sudo apt-get install -y autoconf automake libtool curl
+cd ~/Desktop
+wget https://github.com/google/protobuf/releases/download/v3.5.1/protobuf-all-3.5.1.tar.gz
+tar -zxvf protobuf-all-3.5.1.tar.gz
+cd protobuf-3.5.1
+./configure
+make
+make check
+sudo make install
 
 cd ~/.virtualenvs/py3tf/
 
