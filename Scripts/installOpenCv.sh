@@ -46,6 +46,8 @@ wget https://bootstrap.pypa.io/get-pip.py
 sudo python3 get-pip.py
 echo "Finished installing pip."
 
+pip3 install --upgrade pip
+
 echo "Installing virtualenv..."
 sudo pip install virtualenv virtualenvwrapper
 echo "Done installing virtualenv."
@@ -56,6 +58,10 @@ echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
 echo "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3" >> ~/.bashrc
 echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc
 source `which virtualenvwrapper.sh`
+
+# These will need 'sudo' if not installed into a 
+pip3 install scikit-image
+pip3 install scipy
 
 echo "Creating virtual environment \"py3cv4\" for installation"
 mkvirtualenv py3cv4 -p python3

@@ -39,13 +39,23 @@ sudo apt install -y python3-opencv
 # Install protobuf
 sudo apt-get install -y autoconf automake libtool curl
 cd ~/Desktop
-wget https://github.com/google/protobuf/releases/download/v3.5.1/protobuf-all-3.5.1.tar.gz
-tar -zxvf protobuf-all-3.5.1.tar.gz
-cd protobuf-3.5.1
-./configure
-make
-make check
-sudo make install
+wget https://github.com/google/protobuf/releases/download/v3.9.1/protobuf-all-3.9.1.tar.gz
+tar -zxvf protobuf-all-3.9.1.tar.gz
+cd protobuf-3.9.1
+./configure && make && make check && sudo make install
+
+cd python
+python3 setup.py build --cpp_implementation
+python3 setup.py test --cpp_implementation
+sudo python3 setup.py install --cpp_implementation
+export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=cpp
+export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION_VERSION=3
+sudo ldconfig
+cd ~
+mkdir tensorflow1
+cd tensorflow1
+git clone --recurse-submodules https://github.com/tensorflow/models.git
+sudo echo "export PYTHONPATH=$PYTHONPATH:/home/pi/tensorflow1/models/research:/home/pi/tensorflow1/models/research/slim" >> ~/.bashrc
 
 cd ~/.virtualenvs/py3tf/
 
