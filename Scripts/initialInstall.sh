@@ -8,6 +8,10 @@ sudo apt autoremove -y
 
 # Now perform the device specific installs, while outputting 
 # their data to a file and the terminal.
+sudo pip3 install adafruit-blinka
+sudo pip3 install adafruit-circuitpython-tlc5947
+sudo pip3 install --upgrade --ignore-installed SpiDev
+
 sudo ./installVnc.sh 2>&1 | tee vncInstallResults.txt
 sudo ./installOpenCv.sh 2>&1 | tee opencvInstallResults.txt
 sudo ./installSixFab4gLte.sh 2>&1 | tee sixFab4gLteInstallResults.txt

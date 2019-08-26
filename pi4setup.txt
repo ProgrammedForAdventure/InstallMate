@@ -19,3 +19,5 @@ deb http://mirrordirector.raspbian.org/raspbian/ wheezy main contrib non-free rp
 deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi
 And ran:
 sudo apt-get install g++-4.8
+
+Don't forget to use raspi-config to enable SPI!
