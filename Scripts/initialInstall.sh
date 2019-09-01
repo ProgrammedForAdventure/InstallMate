@@ -11,6 +11,7 @@ sudo apt autoremove -y
 sudo pip3 install adafruit-blinka
 sudo pip3 install adafruit-circuitpython-tlc5947
 sudo pip3 install --upgrade --ignore-installed SpiDev
+sudo pip3 install imutils
 
 sudo ./installVnc.sh 2>&1 | tee vncInstallResults.txt
 sudo ./installOpenCv.sh 2>&1 | tee opencvInstallResults.txt
